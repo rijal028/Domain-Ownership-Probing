@@ -55,22 +55,36 @@ def plot_cohesion_bar(domain_names, cohesion_avgs, save_path):
 # ======================================
 def export_all_figures(results, out_dir="outputs/figures"):
     """
-    results format (from your main probe):
+    Accepts results from DomainProbeEngine.run_full_probe():
     {
-      "domain_names": [...],
-      "similarity_matrix": np.array NxN,
-      "win_rates": {domain: float},
-      "cohesion_avg": {domain: float},
+      "similarity_matrix": {domain -> {domain -> float}},
+      "cohesion": {domain -> {"avg","min","max"}},
+      "ownership": {domain -> {"wins","total","win_rate"}},
+      ...
     }
     """
     ensure_dir(out_dir)
 
-    domain_names = results["domain_names"]
-    sim_matrix = results["similarity_matrix"]
+    sim_matrix_dict = results["similarity_matrix"]
+    cohesion_dict = results["cohesion"]
+    ownership_dict = results["ownership"]
 
-    win_rates = [results["win_rates"][d] for d in domain_names]
-    cohesion_avgs = [results["cohesion_avg"][d] for d in domain_names]
+    # domain list (sorted biar stabil urutannya)
+    domain_names = sorted(sim_matrix_dict.keys())
 
+    # Convert similarity dict -> numpy NxN
+    sim_matrix = np.array([
+        [sim_matrix_dict[d1][d2] for d2 in domain_names]
+        for d1 in domain_names
+    ])
+
+    # Collect win rates
+    win_rates = [ownership_dict[d]["win_rate"] for d in domain_names]
+
+    # Collect cohesion avg
+    cohesion_avgs = [cohesion_dict[d]["avg"] for d in domain_names]
+
+    # Save figures
     plot_similarity_heatmap(
         domain_names,
         sim_matrix,
