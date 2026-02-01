@@ -36,7 +36,8 @@ def load_domain_py_file(filepath):
     DOMAIN_name = "biology"
     TEXTS = ["...", "...", ...]
     """
-    spec = importlib.util.spec_from_file_location("domain_module", filepath)
+    module_name = os.path.splitext(os.path.basename(filepath))[0]  # ✅ unique module name
+    spec = importlib.util.spec_from_file_location(module_name, filepath)
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
 
@@ -55,7 +56,7 @@ def load_domain_py_file(filepath):
 def load_domains_from_folder(domains_dir):
     """
     domains_dir: domains/senior_high/
-    expects many .py files each containing DOMAIN_name and TEXTS
+    expects many .py files each containing DOMAIN_name and TEXTS (or DOMAIN_texts)
     """
     domains = {}
     for fname in sorted(os.listdir(domains_dir)):
