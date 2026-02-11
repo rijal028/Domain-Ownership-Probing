@@ -1,10 +1,10 @@
-# DomainProbe (Apart Sprint Submission)
+# DomainProbe
 
 DomainProbe is a lightweight, offline-capable verification tool that estimates what knowledge domains a language model represents internally  without requiring access to the training dataset.
 
 Instead of evaluating model answers (which can be unstable), DomainProbe extracts internal embeddings from the model and checks whether texts from the same domain form a consistent cluster in representation space.
 
-This project is built for the Apart Research – Technical AI Governance Challenge, focusing on practical capability verification infrastructure.
+This project originated during a technical AI governance sprint and has since evolved into an independent research tool for representation-level domain analysis
 
 
 ## WHY THIS MATTERS (TECHNICAL AI GOVERNANCE)
@@ -203,4 +203,5 @@ To run fully offline:
 - It measures representation alignment between probes and domain clusters.
 - Domains may overlap naturally (example: medicine vs biology).
 - Results depend on probe text quality and level definitions.
+  
 
