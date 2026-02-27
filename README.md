@@ -66,7 +66,8 @@ Contains:
 ## REPOSITORY STRUCTURE
 
 
-apart-sprint/
+Domain-Ownership-Probing
+/
 
 ├── run.py
 
